@@ -1,1 +1,30 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 网页标签页上显示的标题 -->
+    <title>南京大学地理协会 (NJUGA)</title>
+    <!-- 网页标签页上显示的图标 -->
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/zh/thumb/4/4c/Nanjing_University_Logo.svg/120px-Nanjing_University_Logo.svg.png">
+    <style>
+        /* 让内嵌窗口占满整个屏幕，不留白边 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 核心魔法：全屏无缝嵌入你的 Streamlit 网站 -->
+    <!-- 后面加 ?embed=true 可以隐藏掉 Streamlit 原本右上角的菜单，显得更像原生网站！ -->
+    <iframe src="https://njugeo.streamlit.app/?embed=true"></iframe>
+</body>
+</html>

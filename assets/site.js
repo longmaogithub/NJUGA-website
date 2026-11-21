@@ -1,4 +1,19 @@
 'use strict';
+// Preserve previously shared links to the old contact section.
+if (location.pathname.endsWith('/about.html') && location.hash === '#join') {
+  location.replace('join.html');
+}
+const mobileNav = document.querySelector('.mobile-nav');
+if (mobileNav) {
+  mobileNav.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      mobileNav.open = false;
+      mobileNav.querySelector('summary').focus();
+    }
+  });
+  mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { mobileNav.open = false; }));
+  matchMedia('(min-width: 992px)').addEventListener('change', event => { if (event.matches) mobileNav.open = false; });
+}
 for (const collection of document.querySelectorAll('[data-collection]')) {
   const tools = collection.querySelector('[data-filters]');
   const buttons = [...tools.querySelectorAll('[data-filter]')];

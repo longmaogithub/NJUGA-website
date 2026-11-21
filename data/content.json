@@ -10,7 +10,8 @@
         "url": "https://mp.weixin.qq.com/s/qysGTzU1E0p6X3zh9PsxFA",
         "cover": "assets/images/image-0.webp",
         "slug": "industrial-memory",
-        "eventDate": "2026-05-16"
+        "eventDate": "2026-05-16",
+        "summary": "走进南炼社区与甘家巷，观察工业生活的变迁，探访南朝神道石刻。"
       },
       {
         "title": "「读万卷书，行万里路」主题分享会",
@@ -20,7 +21,8 @@
         "url": "https://mp.weixin.qq.com/s/sVtaJFXWv9m6_RIcysFO7g",
         "cover": "assets/images/image-1.webp",
         "slug": "reading-week",
-        "eventDate": "2026-04-23"
+        "eventDate": "2026-04-23",
+        "summary": "围绕地理阅读开展主题分享，结合共享图书角与摄影展交流观察。"
       },
       {
         "title": "漫步 | 春风试暖，钟山寻芳",
@@ -30,7 +32,8 @@
         "url": "https://www.xiaohongshu.com/explore/69ad718600000000260315c1?xsec_token=ABiiw3C_GlbvCliQshONjzsgc-3YmIkT2PHWh-uiitEb4=&xsec_source=pc_user",
         "cover": "assets/images/image-2.webp",
         "slug": "zhongshan-spring",
-        "eventDate": "2026-03-14"
+        "eventDate": "2026-03-14",
+        "summary": "从中山植物园到灵谷景区，在春日花木与历史遗迹之间漫步。"
       }
     ]
   },

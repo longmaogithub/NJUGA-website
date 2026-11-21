@@ -1,63 +1,60 @@
-# 南京大学地理协会静态官网
+# 南京大学地理协会官网与内容后台
 
-紫色品牌、摄影与杂志排版，使用本地托管的 Bootstrap 5.3.9。网站不再嵌入 Streamlit，也没有 AI、后端、数据库、登录或 API 密钥。访问者直接读取 HTML、CSS、JavaScript 和图片，不存在应用因无人访问而休眠的问题。
+官网保持紫色品牌和静态页面；后台使用 Sveltia CMS 0.270.0，可视化编辑文章、活动、独立页面、网站信息并上传图片。内容保存在 GitHub，发布后由 GitHub Actions 生成网页。没有常驻服务器、数据库或 AI 服务。
 
-## 页面
+## 首次启用（仓库所有者操作一次）
 
-- `index.html`：协会导览、最近活动和精选文章。
-- `activities.html`：活动安排与往期列表。
-- `activity-*.html`：完整活动通知与原文链接。
-- `journal.html`：7 篇原站推文，支持分类和关键词搜索。
-- `about.html`：协会介绍、活动图集与可展开的部门分工。
-- `join.html`：参与条件、参与方式及联系方式。
-- `404.html`：错误页。
+1. 合并本次 PR。
+2. 打开 [Pages 设置](https://github.com/longmaogithub/NJUGA-website/settings/pages)，将 **Source 改为 GitHub Actions**，保留域名 `www.njuga.cn`，启用 **Enforce HTTPS**。如果首次发布失败，切换 Source 后在 [Actions](https://github.com/longmaogithub/NJUGA-website/actions) 重新运行 `Check and publish website`。
+3. 在仓库 Settings → Collaborators 确认只有你本人具有写权限，并检查 GitHub Apps 的授权。后台以 GitHub 仓库权限作为真正的授权边界；隐藏 `/admin/` 或网页中的用户名判断都不能替代这一点。此实现没有独立账号系统，也不开放注册或访客投稿。如果以后给其他人仓库写权限，他们也能修改网站。
+4. 在 [GitHub Fine-grained tokens](https://github.com/settings/personal-access-tokens) 创建令牌：所有者 `longmaogithub`，仓库仅选 `NJUGA-website`，只授予 **Contents: Read and write**；Metadata 只读自动包含。设置到期日。不要授予所有仓库或使用账号密码登录。
+5. 打开 `https://www.njuga.cn/admin/`，选择“使用访问令牌登录”，输入令牌。必须先确认 HTTPS 证书正常；HTTP 地址不会加载登录组件。不要把令牌提交到仓库、写入配置或发到聊天里。
 
-主要内容已直接写进 HTML。即使关闭 JavaScript，页面、文章链接、活动详情与联系方式仍可使用；移动菜单使用浏览器原生折叠控件，无需 JavaScript；JavaScript 仅增强文章筛选与复制群号。
+令牌由 CMS 保存在当前浏览器中。换电脑可以使用同一有效令牌，或为设备单独创建令牌；共用电脑使用后退出并清理站点数据。可随时在 GitHub 撤销令牌。中文界面跟随浏览器语言，也可以在后台设置中切换。
 
-## 部署到现有域名
+## 日常使用
 
-本仓库根目录已经包含生成好的网页，无需在服务器安装 Node 或 Python。
+- **文章**：标题、作者、日期、分类、摘要、封面和正文。正文支持富文本和 Markdown。填写正文生成站内阅读页；只填写原文链接则跳转公众号等外部文章。至少填写其中一种。
+- **活动**：时间、状态、封面、简介、正文和可选原始通知链接。
+- **独立页面**：发布专题介绍等图文页，可选择加入主导航。建议额外导航不超过两个。不是任意 HTML/JS 网站代码托管。
+- **网站设置**：首页标题、大图、协会简介、QQ群、公众号和小红书主页。
+- **图片库**：上传或替换 PNG/JPG/WebP/GIF/AVIF。单文件最多 5 MB，建议压缩到 2 MB 内；新上传文件自动加随机后缀，避免重名覆盖。删除仍被使用的图片会导致构建失败。
 
-1. 审查并合并静态官网 PR。
-2. 在 GitHub 的仓库 Settings → Pages 中，确认发布来源为 **Deploy from a branch → main → / (root)**。如果现在已按这种方式发布，则通常不需要修改。
-3. Custom domain 保持 `www.njuga.cn`，等待 GitHub Pages 部署完成并开启 Enforce HTTPS。根目录 `CNAME` 保留了此域名。
-4. 若域名原本已指向此仓库，无需修改 DNS。若尚未设置，域名服务商中将 `www` 的 CNAME 指向 `longmaogithub.github.io`，不加仓库名或 URL 路径。根域名 `njuga.cn` 如需同时访问，请按 GitHub 官方文档单独配置，不要覆盖邮箱 MX 记录。
-5. 用校园网与移动网络分别测试首页、活动详情、原文链接和 HTTPS。海外托管的国内访问质量需要实际确认。
+每个条目需要一个唯一的英文 `slug`（网址标识）。发布后不要修改它；新文章地址 `article-标识.html`，活动 `activity-标识.html`，独立页面 `page-标识.html`。在官网显示开关关闭后不生成对应页面。仓库是公开的，未展示的内容与历史记录仍可在 GitHub 查看，不能存放保密稿件或敏感信息。
 
-这份 PR 不会自动修改 Pages 设置、DNS、主分支或旧 Streamlit 应用；合并并确认新站可用后，可在 Streamlit 控制台停止旧应用。旧 `NJUGA` 仓库保留为原始内容归档，新站运行不读取它。
+点击保存/发布后，等 Actions 检查及部署变绿，再刷新官网。正常需要几分钟。构建会校验内容、日期、图片、链接，并过滤文章中的脚本；检查失败时不部署，线上保持上一正常版本。按报错修改内容再保存即可。需要回退时，在 GitHub 回退对应内容提交；图片和文本均有 Git 历史。
 
-官方文档：
-- https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
-- https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-- https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
+## 源码与构建
 
-## 日常更新
-
-只需 Node.js 20 或更高版本，无第三方构建依赖，不用执行 npm install。
+使用 Node.js 24 和 pnpm 11.25.0：
 
 ```sh
-node scripts/build.mjs
-node scripts/check.mjs
+pnpm install --frozen-lockfile
+pnpm test
 ```
 
-更新文章或活动时，编辑 `data/content.json`，运行上面的命令，再将数据和生成的 HTML 一起提交。CI 会检查生成结果是否与数据一致；失败时重新构建后提交即可。
+`pnpm test` 执行配置、安全和内容生命周期测试，再生成并检查站点。部署目录为 `dist/`；它仅包含实际网站、后台与资源，不包含源内容 JSON、构建脚本、依赖目录或测试数据。CMS 在登录后从 GitHub 读取内容，官网无需访问 GitHub API。
 
-- `ARTICLE_DATA` 的键是分类。新增文章填写 `title`、`author`、`date`、`summary`、`url`、`cover`。
-- `ACTIVITY_DATA` 的键是分组。每场活动填写 `title`、`date`（原通知发布日期）、`eventDate`（举办日，YYYY-MM-DD）、`slug`（唯一英文短名）、`status`、`desc`、`url`、`cover`。
-- 举办日期与通知发布日期分开保存；已结束的活动不会显示“报名”按钮。活动结束后应手动更新 `status` 和分组，网站不推断报名状态。
-- `desc` 保留原站正文，构建器把换行与 HTML 文本转换为安全的段落。
-- 图片放在 `assets/images/`，尽量使用压缩后的 WebP。Logo 为用户提供的透明 PNG 原文件。
-- 页面公共结构在 `scripts/build.mjs`；颜色和版式在 `assets/site.css`；筛选与复制在 `assets/site.js`。
-- 不要只改生成后的 HTML，否则下次构建会被覆盖。
+- `content/articles/*.json`：文章，一篇一文件。
+- `content/activities/*.json`：活动，一场一文件。
+- `content/pages/*.json`：独立页面。
+- `content/settings.json`：网站信息。
+- `admin/config.json`：可视化编辑字段，不含凭证。
+- `scripts/build.mjs`、`scripts/content.mjs`：生成网页、验证和安全渲染。
+- `.github/workflows/check.yml`：PR 只检查，主分支检查成功后部署 Pages。
 
-## 维护与费用
+仓库根目录旧 HTML 暂作为迁移前快照保留；它们不再是部署产物，也不应手动编辑。**继续使用 Deploy from a branch 会显示旧快照，后台修改不会上线。** 不再编辑 `data/content.json`；新内容只读取 `content/`。
 
-GitHub Pages 支持 GitHub Free 的公开仓库。正常协会内容站无需单独购买服务器、数据库或付费 SSL 证书，主要持续成本为域名续费。平台有容量、流量等使用限额，不是无限资源；如流量或需求变化，再评估迁移。
+Sveltia 及中文语言、图标字体打包到本站，不依赖前端 CDN。构建使用锁定版本及 lockfile。测试用 `test-repo` 后台仅存在于本机 QA 副本，发布配置始终为 GitHub backend，关闭 Open Authoring。
 
-平时维护：续费域名、更新活动、检查外链是否仍有效、偶尔更新 Bootstrap 并测试。所有框架与图片资源随站发布，不依赖外部字体或前端 CDN。取消 AI 后没有模型 API 费用。
+## 费用与维护
 
-## 内容与第三方许可
+沿用 GitHub Pages 与现有域名，不需要额外购买服务器、数据库、对象存储或 SSL。维护主要是域名续费、到期令牌更新、内容更新，以及定期检查依赖和发布结果。平台容量与使用限额仍适用；不用于视频或大文件托管。后台操作需要能够访问 GitHub。
 
-协会文章、原文链接与图片迁自 `longmaogithub/NJUGA`，版权归原作者或协会；未经授权不得将内容用于其他用途。本次迁移没有授予内容新的开源许可。
+## 验证范围与许可
 
-Bootstrap 5.3.9 使用 MIT 许可证，完整许可见 `assets/vendor/BOOTSTRAP-LICENSE.txt`。视觉借鉴杂志式摄影与校园官网信息层级，未复制参考网站的源码、照片或标识。
+已验证配置符合所用 CMS 版本、构建及链接检查、输入安全和显示开关。浏览器以隔离测试仓库验证后台界面与编辑操作。正式账号登录、GitHub 写入和首次 Pages 部署必须在所有者完成上述设置后验收；不能将本地测试当作真实发布成功。
+
+协会内容版权归原作者或协会。Bootstrap 许可见 `assets/vendor/BOOTSTRAP-LICENSE.txt`。Sveltia 及字体许可证随构建产物保留于 `admin/vendor/`；其他构建依赖许可证在安装包中。
+
+参考：[Sveltia GitHub 登录](https://sveltiacms.app/en/docs/backends/github)、[GitHub Pages 发布方式](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)。

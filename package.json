@@ -1,1 +1,24 @@
-{"name":"njuga-website","version":"1.0.0","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","check":"node scripts/check.mjs","test":"npm run build && npm run check"},"engines":{"node":">=20"}}
+{
+  "name": "njuga-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node --test scripts/content.test.mjs && node scripts/build.mjs && node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@sveltia/cms": "0.270.0",
+    "marked": "18.2.1",
+    "sanitize-html": "2.18.2"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "esbuild": "0.28.2"
+  }
+}

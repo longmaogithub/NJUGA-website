@@ -1,0 +1,336 @@
+{
+  "backend": {
+    "name": "github",
+    "repo": "longmaogithub/NJUGA-website",
+    "branch": "main",
+    "auth_methods": [
+      "token"
+    ],
+    "open_authoring": false
+  },
+  "site_url": "https://www.njuga.cn",
+  "display_url": "https://www.njuga.cn",
+  "publish_mode": "simple",
+  "media_folder": "assets/images",
+  "public_folder": "/assets/images",
+  "collections": [
+    {
+      "name": "articles",
+      "label": "文章",
+      "folder": "content/articles",
+      "create": true,
+      "delete": true,
+      "format": "json",
+      "extension": "json",
+      "identifier_field": "slug",
+      "slug": "{{slug}}",
+      "summary": "{{title}}",
+      "fields": [
+        {
+          "name": "title",
+          "label": "标题",
+          "widget": "string"
+        },
+        {
+          "name": "slug",
+          "label": "网址标识",
+          "widget": "string",
+          "hint": "使用小写英文字母、数字、短横线，例如 nanjing-walk；发布后保持不变。",
+          "pattern": [
+            "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "请使用小写英文、数字、短横线"
+          ]
+        },
+        {
+          "name": "published",
+          "label": "在官网显示",
+          "widget": "boolean",
+          "default": true,
+          "hint": "关闭后不会出现在官网，但内容仍保存在公开 GitHub 仓库；不要在这里保存保密信息。"
+        },
+        {
+          "name": "date",
+          "label": "发布日期",
+          "widget": "datetime",
+          "format": "YYYY-MM-DD",
+          "date_format": "YYYY-MM-DD",
+          "time_format": false
+        },
+        {
+          "name": "category",
+          "label": "分类",
+          "widget": "select",
+          "options": [
+            "九州风物",
+            "地图上",
+            "招新",
+            "其他"
+          ]
+        },
+        {
+          "name": "author",
+          "label": "作者",
+          "widget": "string"
+        },
+        {
+          "name": "cover",
+          "label": "封面图片",
+          "widget": "image",
+          "choose_url": false,
+          "accept": ".png,.jpg,.jpeg,.webp,.gif,.avif"
+        },
+        {
+          "name": "summary",
+          "label": "摘要",
+          "widget": "text"
+        },
+        {
+          "name": "url",
+          "label": "原文链接",
+          "widget": "string",
+          "required": false,
+          "hint": "可留空；填写时必须以 https:// 开头。",
+          "pattern": [
+            "^https://[^\\s]+$",
+            "请输入 HTTPS 链接"
+          ]
+        },
+        {
+          "name": "body",
+          "label": "正文",
+          "widget": "markdown",
+          "required": false,
+          "hint": "可直接排版、插入图片；站内文章需填写正文。"
+        }
+      ],
+      "description": "填写正文可发布站内文章；只有原文链接时跳转公众号等外部网站。"
+    },
+    {
+      "name": "activities",
+      "label": "活动",
+      "folder": "content/activities",
+      "create": true,
+      "delete": true,
+      "format": "json",
+      "extension": "json",
+      "identifier_field": "slug",
+      "slug": "{{slug}}",
+      "summary": "{{title}}",
+      "fields": [
+        {
+          "name": "title",
+          "label": "标题",
+          "widget": "string"
+        },
+        {
+          "name": "slug",
+          "label": "网址标识",
+          "widget": "string",
+          "hint": "使用小写英文字母、数字、短横线，例如 nanjing-walk；发布后保持不变。",
+          "pattern": [
+            "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "请使用小写英文、数字、短横线"
+          ]
+        },
+        {
+          "name": "published",
+          "label": "在官网显示",
+          "widget": "boolean",
+          "default": true,
+          "hint": "关闭后不会出现在官网，但内容仍保存在公开 GitHub 仓库；不要在这里保存保密信息。"
+        },
+        {
+          "name": "eventDate",
+          "label": "活动日期",
+          "widget": "datetime",
+          "format": "YYYY-MM-DD",
+          "date_format": "YYYY-MM-DD",
+          "time_format": false
+        },
+        {
+          "name": "status",
+          "label": "状态",
+          "widget": "select",
+          "options": [
+            "报名中",
+            "进行中",
+            "已结束"
+          ]
+        },
+        {
+          "name": "cover",
+          "label": "封面图片",
+          "widget": "image",
+          "choose_url": false,
+          "accept": ".png,.jpg,.jpeg,.webp,.gif,.avif"
+        },
+        {
+          "name": "summary",
+          "label": "一句话简介",
+          "widget": "text"
+        },
+        {
+          "name": "url",
+          "label": "原文链接",
+          "widget": "string",
+          "required": false,
+          "hint": "可留空；填写时必须以 https:// 开头。",
+          "pattern": [
+            "^https://[^\\s]+$",
+            "请输入 HTTPS 链接"
+          ]
+        },
+        {
+          "name": "body",
+          "label": "正文",
+          "widget": "markdown",
+          "required": true,
+          "hint": "可直接排版、插入图片；站内文章需填写正文。"
+        }
+      ],
+      "description": "活动安排、报名说明和往期记录。"
+    },
+    {
+      "name": "pages",
+      "label": "独立页面",
+      "folder": "content/pages",
+      "create": true,
+      "delete": true,
+      "format": "json",
+      "extension": "json",
+      "identifier_field": "slug",
+      "slug": "{{slug}}",
+      "summary": "{{title}}",
+      "fields": [
+        {
+          "name": "title",
+          "label": "标题",
+          "widget": "string"
+        },
+        {
+          "name": "slug",
+          "label": "网址标识",
+          "widget": "string",
+          "hint": "使用小写英文字母、数字、短横线，例如 nanjing-walk；发布后保持不变。",
+          "pattern": [
+            "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "请使用小写英文、数字、短横线"
+          ]
+        },
+        {
+          "name": "published",
+          "label": "在官网显示",
+          "widget": "boolean",
+          "default": true,
+          "hint": "关闭后不会出现在官网，但内容仍保存在公开 GitHub 仓库；不要在这里保存保密信息。"
+        },
+        {
+          "name": "showInNav",
+          "label": "加入顶部导航",
+          "widget": "boolean",
+          "default": false,
+          "hint": "仅重要专题开启，建议导航额外页面不超过两个。"
+        },
+        {
+          "name": "summary",
+          "label": "页面简介",
+          "widget": "text"
+        },
+        {
+          "name": "body",
+          "label": "正文",
+          "widget": "markdown",
+          "required": true,
+          "hint": "可直接排版、插入图片；站内文章需填写正文。"
+        }
+      ],
+      "description": "建立专题介绍等图文页面，网址为 page-网址标识.html。"
+    },
+    {
+      "name": "settings",
+      "label": "网站设置",
+      "files": [
+        {
+          "name": "website",
+          "label": "首页与联系方式",
+          "file": "content/settings.json",
+          "fields": [
+            {
+              "name": "heroTitle",
+              "label": "首页主标题",
+              "widget": "text"
+            },
+            {
+              "name": "heroDescription",
+              "label": "首页简介",
+              "widget": "text"
+            },
+            {
+              "name": "heroCover",
+              "label": "首页大图",
+              "widget": "image",
+              "choose_url": false,
+              "accept": ".png,.jpg,.jpeg,.webp,.gif,.avif"
+            },
+            {
+              "name": "heroCaption",
+              "label": "大图说明",
+              "widget": "string"
+            },
+            {
+              "name": "aboutIntro",
+              "label": "协会介绍",
+              "widget": "text"
+            },
+            {
+              "name": "aboutBody",
+              "label": "我们做什么",
+              "widget": "text"
+            },
+            {
+              "name": "qq",
+              "label": "活动 QQ 群",
+              "widget": "string",
+              "pattern": [
+                "^[0-9]{5,12}$",
+                "请输入群号数字"
+              ]
+            },
+            {
+              "name": "wechat",
+              "label": "微信公众号名称",
+              "widget": "string"
+            },
+            {
+              "name": "xiaohongshuName",
+              "label": "小红书账号名称",
+              "widget": "string"
+            },
+            {
+              "name": "xiaohongshuUrl",
+              "label": "小红书主页链接",
+              "widget": "string",
+              "pattern": [
+                "^https://www\\.xiaohongshu\\.com/user/profile/[^\\s]+$",
+                "请输入小红书个人主页 HTTPS 链接"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "app_title": "地协内容管理",
+  "logo": {
+    "src": "/assets/images/logo.png"
+  },
+  "media_libraries": {
+    "default": {
+      "config": {
+        "max_file_size": 5242880,
+        "slugify_filename": true,
+        "filename_template": "{{slug}}-{{uuid_short}}"
+      }
+    }
+  }
+}

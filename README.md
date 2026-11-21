@@ -4,14 +4,15 @@
 
 ## 页面
 
-- `index.html`：摄影首页、精选文章、活动回顾、协会简介。
-- `activities.html`：活动列表与搜索。
+- `index.html`：协会导览、最近活动和精选文章。
+- `activities.html`：活动安排与往期列表。
 - `activity-*.html`：完整活动通知与原文链接。
 - `journal.html`：7 篇原站推文，支持分类和关键词搜索。
-- `about.html`：协会介绍、五个部门、联系方式。
+- `about.html`：协会介绍、活动图集与可展开的部门分工。
+- `join.html`：参与条件、参与方式及联系方式。
 - `404.html`：错误页。
 
-主要内容已直接写进 HTML。即使关闭 JavaScript，页面、文章链接、活动详情与联系方式仍可使用；JavaScript 仅增强导航、筛选与复制群号。
+主要内容已直接写进 HTML。即使关闭 JavaScript，页面、文章链接、活动详情与联系方式仍可使用；移动菜单使用浏览器原生折叠控件，无需 JavaScript；JavaScript 仅增强文章筛选与复制群号。
 
 ## 部署到现有域名
 

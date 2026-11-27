@@ -322,7 +322,7 @@
   ],
   "app_title": "地协内容管理",
   "logo": {
-    "src": "/assets/images/logo.png"
+    "src": "/assets/favicon.svg"
   },
   "media_libraries": {
     "default": {

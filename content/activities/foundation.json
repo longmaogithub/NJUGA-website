@@ -7,5 +7,15 @@
   "cover": "/assets/images/foundation-faa30b93f2f3.png",
   "summary": "我们正式成立了！",
   "url": "https://www.xiaohongshu.com/explore/6917117b0000000007033d8f?xsec_token=AB8n0W4VJHTtireU1PLcTbkkIU8wyBtM0guFmepJ4cpnM",
-  "body": "时间：11月22日14:00\n\n\n地点：南京大学仙林校区内\n\n特邀嘉宾：胡阿祥教授"
+  "body": "特邀嘉宾：胡阿祥教授",
+  "itinerary": {
+    "startAt": "2025-11-22T14:00",
+    "endAt": "",
+    "meetingPoint": "南京大学仙林校区",
+    "dismissalPoint": "",
+    "route": "",
+    "endNote": ""
+  },
+  "precautions": "",
+  "organizers": []
 }

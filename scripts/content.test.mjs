@@ -25,6 +25,17 @@ test('activity start time has minute precision and no implicit timezone conversi
  assert(renderActivityModules(a).includes('datetime="2026-11-29T09:15+08:00"'));
  for(const date of ['2026-11-29T24:00','2026-11-29T09:60','2026-02-30T09:15','2026-11-29','2026-11-29T09:15:00'])assert.throws(()=>validateActivityModules({itinerary:{startAt:date}}));
 });
+test('start and end times are independently optional',()=>{
+ for(const itinerary of [{},{startAt:'',endAt:''},{startAt:null,endAt:null}]){
+  validateActivityModules({itinerary});assert.equal(renderActivityModules({itinerary}),'');
+ }
+ const endOnly={itinerary:{endAt:'2026-11-29T14:00'}};validateActivityModules(endOnly);
+ const html=renderActivityModules(endOnly);assert(html.includes('<h3>起止时间</h3>'));assert(html.includes('结束：'));assert(!html.includes('开始：'));
+ const both={itinerary:{startAt:'2026-11-29T09:15',endAt:'2026-11-29T14:00'}};validateActivityModules(both);
+ assert(renderActivityModules(both).includes('开始：')&&renderActivityModules(both).includes('结束：'));
+ assert.throws(()=>validateActivityModules({itinerary:{endAt:'2026-11-29T25:00'}}));
+ assert.throws(()=>validateActivityModules({itinerary:{startAt:'2026-11-29T14:00',endAt:'2026-11-29T09:15'}}));
+});
 test('activity modules escape plain fields and sanitize rich text',()=>{
  const html=renderActivityModules({itinerary:{route:'<script>bad()</script>'},precautions:'<script>bad()</script>\n\n**注意**',organizers:[{role:'<img src=x onerror=bad()>',names:'A&B'}]});
  assert(!html.includes('<script>')&&!html.includes('<img'));assert(html.includes('<strong>注意</strong>'));assert(html.includes('A&amp;B'));

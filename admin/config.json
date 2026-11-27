@@ -196,13 +196,25 @@
           "fields": [
             {
               "name": "startAt",
-              "label": "起始时间",
+              "label": "开始时间",
               "widget": "datetime",
               "required": false,
               "format": "YYYY-MM-DDTHH:mm",
               "date_format": "YYYY-MM-DD",
               "time_format": "HH:mm",
-              "hint": "北京时间，精确到分钟；留空不显示。",
+              "hint": "起止时间的开始时间，北京时间，精确到分钟；可单独留空。",
+              "input_timezone": "Asia/Shanghai",
+              "output_utc": false
+            },
+            {
+              "name": "endAt",
+              "label": "结束时间",
+              "widget": "datetime",
+              "required": false,
+              "format": "YYYY-MM-DDTHH:mm",
+              "date_format": "YYYY-MM-DD",
+              "time_format": "HH:mm",
+              "hint": "起止时间的结束时间，北京时间，精确到分钟；可单独留空。",
               "input_timezone": "Asia/Shanghai",
               "output_utc": false
             },

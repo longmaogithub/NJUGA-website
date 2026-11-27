@@ -58,14 +58,20 @@
         },
         {
           "name": "category",
-          "label": "分类",
-          "widget": "select",
-          "options": [
-            "九州风物",
-            "地图上",
-            "招新",
-            "其他"
-          ]
+          "label": "栏目",
+          "widget": "relation",
+          "collection": "settings",
+          "file": "article_categories",
+          "value_field": "categories.*.name",
+          "display_fields": [
+            "categories.*.name"
+          ],
+          "search_fields": [
+            "categories.*.name"
+          ],
+          "multiple": false,
+          "required": true,
+          "hint": "栏目可在「网站设置 → 文章栏目」中新增、排序并保存。"
         },
         {
           "name": "author",
@@ -400,6 +406,33 @@
               "pattern": [
                 "^https://www\\.xiaohongshu\\.com/user/profile/[^\\s]+$",
                 "请输入小红书个人主页 HTTPS 链接"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "article_categories",
+          "label": "文章栏目",
+          "file": "content/article-categories.json",
+          "fields": [
+            {
+              "name": "categories",
+              "label": "栏目列表",
+              "widget": "list",
+              "required": false,
+              "summary": "{{fields.name}}",
+              "hint": "拖动调整官网栏目顺序；“全部”自动排在最前。删除或改名之前，请先修改该栏目下文章的分类。",
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "栏目名称",
+                  "widget": "string",
+                  "required": true,
+                  "pattern": [
+                    "^(?!全部$)\\S(?:.{0,28}\\S)?$",
+                    "请输入 1–30 个字符，不含首尾空格，不能使用“全部”"
+                  ]
+                }
               ]
             }
           ]

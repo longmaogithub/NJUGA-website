@@ -2,6 +2,7 @@ import {readFile, readdir, stat} from 'node:fs/promises';
 import path from 'node:path';
 import {marked} from 'marked';
 import sanitizeHtml from 'sanitize-html';
+import {articleCategoryNames} from './categories.mjs';
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export function imagePath(value) {
@@ -70,6 +71,8 @@ export async function loadContent(root) {
     }
   }
   result.settings=JSON.parse(await readFile(path.join(root,'content/settings.json'),'utf8'));
+  const categoryConfig=JSON.parse(await readFile(path.join(root,'content/article-categories.json'),'utf8'));
+  result.articleCategories=articleCategoryNames(categoryConfig,result.articles);
   const s=result.settings;
   for (const name of ['heroTitle','heroDescription','heroCaption','aboutIntro','aboutBody','wechat','xiaohongshuName']) text(s[name],name);
   if (!/^[0-9]{5,12}$/.test(s.qq)) throw new Error('QQ 群号无效');

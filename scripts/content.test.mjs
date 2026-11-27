@@ -5,9 +5,20 @@ import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import Ajv from 'ajv';
+import {articleCategoryNames} from './categories.mjs';
 import {imagePath,httpsUrl,validDate,validateEntry,renderMarkdown,loadContent} from './content.mjs';
 import {validateActivityModules,renderActivityModules} from './activity.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
+test('article categories follow settings and support additional columns',()=>{
+ const config={categories:[{name:'九州风物'},{name:'地图上'},{name:'招新'},{name:'其他'},{name:'校园观察'}]};
+ assert.deepEqual(articleCategoryNames(config),['九州风物','地图上','招新','其他','校园观察']);
+ config.categories.reverse();assert.equal(articleCategoryNames(config)[0],'校园观察');
+ assert.deepEqual(articleCategoryNames({categories:[{name:'新栏目'}]},[{category:'旧栏目'}]),['新栏目','旧栏目']);
+ assert.deepEqual(articleCategoryNames({categories:[]},[{category:'地图上'}]),['地图上']);
+ for(const config of [{},{categories:null}])assert.deepEqual(articleCategoryNames(config),[]);
+ assert.throws(()=>articleCategoryNames({categories:'invalid'}));
+ for(const categories of [[{name:''}],[{name:'全部'}],[{name:' 前后空格 '}],[{name:'重复'},{name:'重复'}]])assert.throws(()=>articleCategoryNames({categories}));
+});
 test('activity modules allow omitted, empty, null and partial values',()=>{
  const base={slug:'empty',title:'活动',summary:'简介',published:true,eventDate:'2026-11-29',status:'报名中',cover:'/assets/images/logo.png'};
  for(const extra of [{},{body:'',itinerary:{},precautions:'',organizers:[]},{body:null,itinerary:null,precautions:null,organizers:null},{itinerary:{startAt:'',route:'  '},organizers:[{},null,{role:'',names:''}]}]){

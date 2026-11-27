@@ -30,7 +30,7 @@ return `<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#650052">
 <title>${esc(title)} · 南京大学地理协会</title><meta name="description" content="${esc(description)}"><link rel="canonical" href="https://www.njuga.cn/${file==='index.html'?'':file}">
 <meta property="og:title" content="${esc(title)} · 南京大学地理协会"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><meta property="og:image" content="https://www.njuga.cn/assets/images/zhongshan.webp">
-<link rel="icon" type="image/png" href="assets/images/logo.png"><link rel="stylesheet" href="assets/vendor/bootstrap.min.css"><link rel="stylesheet" href="assets/site.css">
+<link rel="icon" type="image/svg+xml" sizes="any" href="assets/favicon.svg"><link rel="stylesheet" href="assets/vendor/bootstrap.min.css"><link rel="stylesheet" href="assets/site.css">
 <script defer src="assets/site.js"></script>
 </head>
 <body><a class="skip-link" href="#main">跳至正文</a><header class="site-header"><nav class="navbar navbar-expand-lg container" aria-label="主导航">

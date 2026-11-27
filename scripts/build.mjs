@@ -3,9 +3,11 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import {loadContent, renderMarkdown, imagePath} from './content.mjs';
 import {build as bundle} from 'esbuild';
+import {validateActivityModules,renderActivityModules} from './activity.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const {articles, activities, pages: customPages, settings} = await loadContent(root);
+for(const a of activities)validateActivityModules(a);
 const out=path.join(root,'dist');
 await rm(out,{recursive:true,force:true});
 await mkdir(out,{recursive:true});
@@ -45,7 +47,7 @@ function story(a,compact=false){
  const attrs=local?'':' target="_blank" rel="noopener noreferrer"';
  return `<article class="story" data-item data-category="${esc(a.category)}" data-search="${esc(a.title+' '+a.author+' '+a.summary)}"><a class="story-image" href="${esc(href)}"${attrs}>${img(a.cover,a.title)}<span class="visually-hidden">阅读文章${local?'':'（在新标签页打开）'}</span></a><div class="story-meta"><span>${esc(a.category)}</span><time datetime="${a.date}">${esc(a.date)}</time></div><h3><a class="story-title" href="${esc(href)}"${attrs}>${esc(a.title)}</a></h3>${compact?'':`<p>${esc(a.summary)}</p><p class="byline">文 / ${esc(a.author)}</p>`}</article>`;
 }
-function activity(a,level=2){return `<article class="activity-row" data-item data-category="${esc(a.status)}" data-search="${esc(a.title+' '+a.body)}"><a class="activity-image" href="activity-${a.slug}.html">${img(a.cover,a.title)}</a><div class="activity-copy"><div class="story-meta"><span class="status">${esc(a.status)}</span><time datetime="${a.eventDate}">${a.eventDate.replaceAll('-',' / ')}</time></div><h${level}><a href="activity-${a.slug}.html">${esc(a.title)}</a></h${level}><p>${esc(a.summary || a.body.split('\n').filter(Boolean)[0])}</p><a class="text-link" href="activity-${a.slug}.html">活动详情</a></div></article>`;}
+function activity(a,level=2){return `<article class="activity-row" data-item data-category="${esc(a.status)}" data-search="${esc(a.title+' '+(a.body ?? ''))}"><a class="activity-image" href="activity-${a.slug}.html">${img(a.cover,a.title)}</a><div class="activity-copy"><div class="story-meta"><span class="status">${esc(a.status)}</span><time datetime="${a.eventDate}">${a.eventDate.replaceAll('-',' / ')}</time></div><h${level}><a href="activity-${a.slug}.html">${esc(a.title)}</a></h${level}><p>${esc(a.summary || (a.body ?? '').split('\n').filter(Boolean)[0])}</p><a class="text-link" href="activity-${a.slug}.html">活动详情</a></div></article>`;}
 function filters(categories,label){return `<div class="filter-tools" data-filters hidden><div class="filter-buttons" role="group" aria-label="${label}分类">${['全部',...categories].map((c,i)=>`<button class="filter-button ${!i?'is-active':''}" type="button" data-filter="${esc(c)}" aria-pressed="${!i}">${esc(c)}</button>`).join('')}</div><div class="search-wrap"><label for="content-search" class="visually-hidden">搜索${label}</label><input id="content-search" class="form-control" type="search" placeholder="搜索${label}" autocomplete="off"></div></div><p class="filter-count" data-count role="status" aria-live="polite" hidden></p>`;}
 const home = `<section class="hero"><div class="hero-picture">${img(settings.heroCover,settings.heroCaption,'',true)}</div><div class="hero-shade"></div><div class="container hero-content"><p class="eyebrow">南京大学地理协会 · NJUGA</p><h1>${esc(settings.heroTitle).replaceAll('\n','<br>')}</h1><p>${esc(settings.heroDescription)}</p><a class="btn btn-light" href="about.html">认识地协</a></div><div class="hero-caption">${esc(settings.heroCaption)}</div></section>
 <section class="container section">${sectionHeading('ACTIVITIES','最近活动','activities.html','全部活动')}${activities.slice(0,2).map(a=>activity(a,3)).join('')}</section>
@@ -64,8 +66,8 @@ const pages = new Map([
 ]);
 for (const a of activities) {
  const file = `activity-${a.slug}.html`;
- const body = `<div class="container detail-shell"><a href="activities.html" class="text-link">返回全部活动</a><header class="detail-header"><p class="eyebrow">${esc(a.status)} · 协会活动</p><h1>${esc(a.title)}</h1><p>活动日期 <time datetime="${a.eventDate}">${a.eventDate.replaceAll('-',' / ')}</time></p></header>${img(a.cover,a.title,'detail-cover',true)}<div class="detail-body">${renderMarkdown(a.body)}</div><div class="detail-actions">${a.url?external(a.url,'查看原始活动通知','btn btn-purple'):''}</div></div>`;
- pages.set(file,layout(file,a.title,a.body.slice(0,140),body,'activities.html'));
+ const body = `<div class="container detail-shell"><a href="activities.html" class="text-link">返回全部活动</a><header class="detail-header"><p class="eyebrow">${esc(a.status)} · 协会活动</p><h1>${esc(a.title)}</h1><p>活动日期 <time datetime="${a.eventDate}">${a.eventDate.replaceAll('-',' / ')}</time></p></header>${img(a.cover,a.title,'detail-cover',true)}<div class="detail-body">${renderActivityModules(a)}</div><div class="detail-actions">${a.url?external(a.url,'查看原始活动通知','btn btn-purple'):''}</div></div>`;
+ pages.set(file,layout(file,a.title,(a.summary || a.body || a.title).slice(0,140),body,'activities.html'));
 }
 for (const a of articles.filter(a=>a.body?.trim())) {
  const file=`article-${a.slug}.html`;

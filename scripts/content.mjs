@@ -33,7 +33,7 @@ export function validateEntry(a, kind) {
   if (kind === 'articles') { text(a.author,'作者'); text(a.category,'分类'); }
   if (kind === 'activities' && !['报名中','进行中','已结束'].includes(a.status)) throw new Error('活动状态无效');
   if (kind === 'pages' && typeof a.showInNav !== 'boolean') throw new Error('导航开关无效');
-  text(a.body ?? '', '正文', kind !== 'articles' || !a.url);
+  text(a.body ?? '', '正文', kind === 'pages' || (kind === 'articles' && !a.url));
 }
 export function renderMarkdown(body='') {
   return sanitizeHtml(marked.parse(body), {

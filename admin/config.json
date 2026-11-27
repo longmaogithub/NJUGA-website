@@ -184,11 +184,86 @@
           "name": "body",
           "label": "正文",
           "widget": "markdown",
-          "required": true,
-          "hint": "可直接排版、插入图片；站内文章需填写正文。"
+          "required": false,
+          "hint": "填写景区介绍等正文，网页不会为这部分额外添加副标题。行程、注意事项和署名请填入下方独立模块。"
+        },
+        {
+          "name": "itinerary",
+          "label": "行程安排",
+          "widget": "object",
+          "required": false,
+          "collapsed": false,
+          "fields": [
+            {
+              "name": "startAt",
+              "label": "起始时间",
+              "widget": "datetime",
+              "required": false,
+              "format": "YYYY-MM-DDTHH:mm",
+              "date_format": "YYYY-MM-DD",
+              "time_format": "HH:mm",
+              "hint": "北京时间，精确到分钟；留空不显示。",
+              "input_timezone": "Asia/Shanghai",
+              "output_utc": false
+            },
+            {
+              "name": "meetingPoint",
+              "label": "集合地点",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "dismissalPoint",
+              "label": "解散地点",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "route",
+              "label": "活动路线",
+              "widget": "text",
+              "required": false
+            },
+            {
+              "name": "endNote",
+              "label": "结束时间说明",
+              "widget": "string",
+              "required": false,
+              "hint": "例如：预计下午 2 点左右结束。"
+            }
+          ]
+        },
+        {
+          "name": "precautions",
+          "label": "注意事项",
+          "widget": "markdown",
+          "required": false
+        },
+        {
+          "name": "organizers",
+          "label": "组织人员",
+          "widget": "list",
+          "required": false,
+          "summary": "{{fields.role}}：{{fields.names}}",
+          "fields": [
+            {
+              "name": "role",
+              "label": "分工",
+              "widget": "string",
+              "required": false,
+              "hint": "例如：策划、文字、海报、摄影，也可以自定义。"
+            },
+            {
+              "name": "names",
+              "label": "人员",
+              "widget": "string",
+              "required": false,
+              "hint": "多人用空格或顿号分隔。"
+            }
+          ]
         }
       ],
-      "description": "活动安排、报名说明和往期记录。"
+      "description": "正文、行程安排、注意事项和组织人员均可留空；空模块与空字段不会出现在官网。"
     },
     {
       "name": "pages",

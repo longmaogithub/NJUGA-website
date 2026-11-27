@@ -11,3 +11,6 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 
 .detail-body img{max-width:100%;height:auto;border-radius:8px}.detail-body h2,.detail-body h3{margin-top:2em}.detail-body blockquote{border-left:3px solid var(--purple,#650052);padding-left:1.2em;color:#62576a}.detail-body pre{overflow:auto;padding:1rem;background:#f3eff5}.detail-body table{display:block;max-width:100%;overflow:auto}.detail-body td,.detail-body th{padding:.6rem;border:1px solid #ded5e3}
+
+/* Activity modules use the existing article typography and spacing. */
+.detail-body .activity-module{margin-top:2.5rem}.detail-body .activity-module>h2{margin:0 0 1.25rem}.detail-body .activity-field{margin:1.25rem 0}.detail-body .activity-field h3{font-size:1rem;line-height:1.6;margin:0 0 .35rem;font-weight:600}.detail-body .activity-field p{margin:0;white-space:pre-line;overflow-wrap:anywhere}
